@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shanshen – Accessoires</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+<script>
+    const sections = document.querySelectorAll('section.category');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.2 });
+
+sections.forEach(section => observer.observe(section));
+
+    // ---------- JS Newsletter Inscription ----------
+const form = document.querySelector('.footer-newsletter form');
+const emailInput = form.querySelector('input[type="email"]');
+
+form.addEventListener('submit', function(e){
+  e.preventDefault();
+  const emailValue = emailInput.value.trim();
+
+  // Validation email
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if(emailPattern.test(emailValue)){
+    showSuccess(emailValue);
+    emailInput.value = '';
+  } else {
+    showError('Email invalide. Veuillez réessayer.');
+  }
+});
+
+function showSuccess(email){
+  const messageBox = document.createElement('div');
+  messageBox.className = 'newsletter-success';
+  messageBox.innerHTML = `Merci! Vous êtes inscrit avec: <strong>${email}</strong>`;
+  form.appendChild(messageBox);
+
+  // Animation fade in + float
+  messageBox.style.opacity = 0;
+  messageBox.style.transform = 'translateY(-20px)';
+  setTimeout(()=>{
+    messageBox.style.transition = 'all 0.8s ease';
+    messageBox.style.opacity = 1;
+    messageBox.style.transform = 'translateY(0)';
+  }, 50);
+
+  // Auto remove after 5s
+  setTimeout(()=>{
+    messageBox.style.opacity = 0;
+    messageBox.style.transform = 'translateY(-20px)';
+    setTimeout(()=> messageBox.remove(), 800);
+  }, 5000);
+}
+
+function showError(msg){
+  const messageBox = document.createElement('div');
+  messageBox.className = 'newsletter-error';
+  messageBox.textContent = msg;
+  form.appendChild(messageBox);
+
+  messageBox.style.opacity = 0;
+  messageBox.style.transform = 'translateY(-20px)';
+  setTimeout(()=>{
+    messageBox.style.transition = 'all 0.8s ease';
+    messageBox.style.opacity = 1;
+    messageBox.style.transform = 'translateY(0)';
+  }, 50);
+
+  setTimeout(()=>{
+    messageBox.style.opacity = 0;
+    messageBox.style.transform = 'translateY(-20px)';
+    setTimeout(()=> messageBox.remove(), 800);
+  }, 5000);
+}
+
+</script>
+  <style>
+    section.category::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: var(--light-green);
+  border-radius: 2px;
+  opacity: 0.7;
+  animation: float 4s ease-in-out infinite;
+}
+section {
+  padding: 80px 10%;
+  position: relative;
+}
+
+.product-card, .hero, .footer {
+  background: rgba(255,255,255,0.05); /* شفاف خفيف لتفريق المحتوى عن background */
+  border-radius: 12px;
+}
+section.category {
+  padding: 120px 10%; /* vertical space أكبر */
+  position: relative;
+  background: rgba(255,255,255,0.03); /* subtle overlay */
+  border-radius: 20px;
+  margin-bottom: 80px;
+  overflow: hidden;
+}
+
+section.category::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: var(--light-green);
+  border-radius: 3px;
+  opacity: 0.6;
+  animation: float 5s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(10px); }
+}
+
+
+    :root {
+      --burgundy: #4a0f1b; /* أغمق شوية */
+      --light-green: #9fb8a0;
+      --soft-blue: #b8cde0;
+      --beige: #f6f2ee;
+      --dark: #1c1c1c;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(180deg, var(--beige), #ffffff);
+      color: var(--dark);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ---------- ANIMATIONS ---------- */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0); }
+    }
+
+    /* ---------- HEADER ---------- */
+    header.hero {
+      min-height: 100vh;
+      background: url('images/background.jpg') center/cover no-repeat;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(74, 15, 27, 0.521),
+        rgba(74, 15, 27, 0.39),
+        rgba(80, 14, 27, 0.253),
+        rgba(63, 14, 24, 0)
+      );
+      backdrop-filter: blur(6px);
+      animation: fadeUp 1.2s ease;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      color: white;
+      max-width: 700px;
+      padding: 20px;
+      animation: fadeUp 1.5s ease;
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 4rem;
+      letter-spacing: 5px;
+      color: #3a0b14;
+      text-transform: uppercase;
+      position: relative;
+    }
+
+    .hero-title::after {
+      content: '';
+      width: 80px;
+      height: 3px;
+      background: var(--light-green);
+      display: block;
+      margin: 18px auto 0;
+      border-radius: 2px;
+      animation: fadeUp 1.6s ease;
+    }
+
+    .hero-subtitle {
+      margin-top: 20px;
+      font-weight: 300;
+      font-size: 1.05rem;
+      opacity: 0.95;
+    }
+
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.5rem;
+      letter-spacing: 3px;
+    }
+
+    header p {
+      margin-top: 20px;
+      font-weight: 300;
+      max-width: 500px;
+    }
+
+    /* ---------- SECTIONS ---------- */
+    section {
+      padding: 100px 10%;
+      animation: fadeUp 1s ease;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem;
+      margin-bottom: 60px;
+      text-align: center;
+      color: var(--burgundy);
+    }
+
+    /* ---------- CATEGORY BLOCK ---------- */
+    .category {
+      margin-bottom: 120px;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 50px;
+    }
+
+    .product-card {
+      background: white;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .product-card:hover {
+      transform: translateY(-12px) scale(1.03);
+      box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 340px;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    .product-card:hover img {
+      transform: scale(1.12);
+    }
+
+    .product-info {
+      padding: 25px;
+      text-align: center;
+    }
+
+    .product-info h3 {
+      font-family: 'Playfair Display', serif;
+      color: var(--burgundy);
+      margin-bottom: 10px;
+    }
+
+    .product-info p {
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    /* ---------- ABOUT & DESCRIPTION (BOTTOM) ---------- */
+    .about {
+      background: linear-gradient(135deg, var(--light-green), var(--soft-blue));
+      border-radius: 40px;
+      padding: 80px 10%;
+      text-align: center;
+      color: #1f2a2a;
+      margin-bottom: 80px;
+    }
+
+    .about h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      margin-bottom: 30px;
+    }
+
+    .about p {
+      max-width: 800px;
+      margin: auto;
+      font-size: 1rem;
+    }
+/* ---------- FOOTER ---------- */
+footer.footer {
+  background: linear-gradient(135deg, var(--burgundy), var(--soft-blue));
+  color: white;
+  padding: 60px 10%;
+  font-family: 'Poppins', sans-serif;
+}
+
+.footer-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+.footer h2, .footer h3 {
+  font-family: 'Playfair Display', serif;
+  margin-bottom: 15px;
+  color: white;
+}
+
+.footer p {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: #f0eae2;
+}
+
+.footer-newsletter input[type="email"] {
+  padding: 10px;
+  border: none;
+  border-radius: 20px;
+  margin-right: 10px;
+  width: 70%;
+}
+
+.footer-newsletter button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  background-color: var(--light-green);
+  color: var(--dark);
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.footer-newsletter button:hover {
+  background-color: #7aa081;
+}
+
+.social-icons a img {
+  width: 28px;
+  margin-right: 15px;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.social-icons a img:hover {
+  transform: scale(1.2);
+  filter: brightness(1.2);
+}
+
+.footer-bottom {
+  text-align: center;
+  font-size: 0.8rem;
+  border-top: 1px solid rgba(255,255,255,0.3);
+  padding-top: 20px;
+  color: #f0eae2;
+}
+
+/* Responsive */
+@media(max-width:768px){
+  .footer-container {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .footer-newsletter input[type="email"] {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .footer-newsletter button {
+    width: 100%;
+  }
+}
+
+    
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1 class="hero-title">SHANSHEN</h1>
+      <p class="hero-subtitle">Des accessoires délicats, pensés pour révéler votre élégance naturelle.</p>
+    </div>
+  </header>
+
+  <!-- BRACELETS -->
+  <section class="category">
+    <h2 class="section-title">Bracelets</h2>
+    <div class="products-grid">
+      <div class="product-card"><img src="images/braclet perl.jpg"><div class="product-info"><h3>Freso Braclet</h3><p>Délicat et élégant.</p></div></div>
+      <div class="product-card"><img src="images/deux braclet matchy.jpg"><div class="product-info"><h3>Matching Bracelets</h3><p>Féminin et moderne.</p></div></div>
+      <div class="product-card"><img src="images/deux braclet matchy 2.jpg"><div class="product-info"><h3>Matching Bracelets</h3><p>Toucher doux.</p></div></div>
+      <div class="product-card"><img src="images/se9in 4.jpg"><div class="product-info"><h3>Bracelet 04</h3><p>Style raffiné.</p></div></div>
+      <div class="product-card"><img src="images/se9in2.jpg"><div class="product-info"><h3>Bracelet 05</h3><p>Minimal chic.</p></div></div>
+      <div class="product-card"><img src="images/se9in 3.jpg"><div class="product-info"><h3>Bracelet 06</h3><p>Élégance naturelle.</p></div></div>
+    </div>
+  </section>
+
+  <!-- BOUCLES -->
+  <section class="category">
+    <h2 class="section-title">Boucles d’oreilles</h2>
+    <div class="products-grid">
+      <div class="product-card"><img src="images/new_col_19.jpg"><div class="product-info"><h3>Boucle 01</h3><p>Douce et lumineuse.</p></div></div>
+      <div class="product-card"><img src="images/new_col_20.jpg"><div class="product-info"><h3>Boucle 02</h3><p>Finition fine.</p></div></div>
+      <div class="product-card"><img src="images/new_col_21.jpg"><div class="product-info"><h3>Boucle 03</h3><p>Style féminin.</p></div></div>
+      <div class="product-card"><img src="images/new_col_22.jpg"><div class="product-info"><h3>Boucle 04</h3><p>Subtile élégance.</p></div></div>
+      <div class="product-card"><img src="images/new_col_23.jpg"><div class="product-info"><h3>Boucle 06</h3><p>Look doux.</p></div></div>
+      <div class="product-card"><img src="images/new_col_24.jpg"><div class="product-info"><h3>Boucle 07</h3><p>Éclat léger.</p></div></div>
+      <div class="product-card"><img src="images/new_col_25.jpg"><div class="product-info"><h3>Boucle 08</h3><p>Minimal.</p></div></div>
+      <div class="product-card"><img src="images/new_col_26.jpg"><div class="product-info"><h3>Boucle 09</h3><p>Délicatesse.</p></div></div>
+      <div class="product-card"><img src="images/new_col_27.jpg"><div class="product-info"><h3>Boucle 10</h3><p>Soft luxury.</p></div></div>
+      <div class="product-card"><img src="images/new_col_28.jpg"><div class="product-info"><h3>Boucle 11</h3><p>Féminité pure.</p></div></div>
+        <div class="product-card"><img src="images/new_col_29.jpg"><div class="product-info"><h3>Boucle 11</h3><p>Féminité pure.</p></div></div>
+    </div>
+  </section>
+
+  <!-- COLLIERS -->
+  <section class="category">
+    <h2 class="section-title">Colliers</h2>
+    <div class="products-grid">
+      <div class="product-card"><img src="images/colier bleu.jpg"><div class="product-info"><h3>Collier 01</h3><p>Minimal et chic.</p></div></div>
+      <div class="product-card"><img src="images/olier bleu 2.jpg"><div class="product-info"><h3>Collier 02</h3><p>Élégance douce.</p></div></div>
+      <div class="product-card"><img src="images/olier coeur.jpg"><div class="product-info"><h3>Collier 03</h3><p>Toucher raffiné.</p></div></div>
+      <div class="product-card"><img src="images/silver.jpg"><div class="product-info"><h3>Collier 04</h3><p>Féminin intemporel.</p></div></div>
+    </div>
+  </section>
+
+  <!-- ABOUT AT BOTTOM -->
+  <section>
+    <div class="about">
+      <h2>À propos de Shanshen</h2>
+      <p>
+        Shanshen est une marque pensée pour les femmes qui aiment les détails subtils,
+        les couleurs douces et l’élégance naturelle. Chaque accessoire est choisi pour
+        créer une émotion, un coup de cœur.
+      </p>
+    </div>
+  </section>
+
+  <footer class="footer">
+  <div class="footer-container">
+
+    <!-- Brand & Logo -->
+    <div class="footer-brand">
+      <h2>SHANSHEN</h2>
+      <p>Accessoires délicats pour sublimer votre féminité.</p>
+    </div>
+
+    <!-- Social Media -->
+    <div class="footer-social">
+      <h3>Suivez-nous</h3>
+      <div class="social-icons">
+        <a href="#"><img src="images/insta1.jfif"></a> _.ShanShen._
+        
+      </div>
+    </div>
+
+    <!-- Contact -->
+    <div class="footer-contact">
+      <h3>Contact</h3>
+      <p>Email: contact@shanshen.com</p>
+      <p>Téléphone: +216 96915479</p>
+    </div>
+
+    <!-- Newsletter -->
+    <div class="footer-newsletter">
+      <h3>Inscrivez-vous</h3>
+      <form>
+        <input type="email" placeholder="Votre email">
+        <button type="submit">Envoyer</button>
+      </form>
+    </div>
+
+  </div>
+  <div class="footer-bottom">
+    © 2025 Shanshen – Tous droits réservés
+  </div>
+</footer>
+
+</body>
+</html>
